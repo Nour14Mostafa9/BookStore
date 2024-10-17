@@ -23,12 +23,12 @@ ThemeData appTheme(){
       textTheme: TextTheme(
           displaySmall:GoogleFonts.lora(
               fontSize: 13,
-              color: AppColor.normal,
+              color: AppColor.darkMode,
             fontWeight: FontWeight.bold,
           ) ,
           bodySmall:GoogleFonts.lora(
             fontSize: 13,
-            color: AppColor.normal,
+            color: AppColor.darkMode,
             fontWeight: FontWeight.bold,
             height: 1.8
           ) ,
@@ -49,3 +49,108 @@ ThemeData appTheme(){
       )
   );
 }
+
+enum AppTheme{
+  lightMode("Light Mode"),
+  darkMode("Dark Mode");
+  final String name;
+  const AppTheme(this.name);
+}
+
+final appThemeData ={
+  AppTheme.lightMode:ThemeData(
+      primaryColor: AppColor.primary,
+      iconTheme: IconThemeData(
+          color: AppColor.iconColor,
+          size: 32
+      ),
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: Colors.white,
+      appBarTheme: AppBarTheme(
+          color: Colors.white,
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+              color: AppColor.primary,
+              fontSize: 22,
+              fontWeight: FontWeight.bold
+          )
+      ),
+      textTheme: TextTheme(
+          displaySmall:GoogleFonts.lora(
+            fontSize: 13,
+            color: AppColor.darkMode,
+            fontWeight: FontWeight.bold,
+          ) ,
+          bodySmall:GoogleFonts.lora(
+              fontSize: 13,
+              color: AppColor.darkMode,
+              fontWeight: FontWeight.bold,
+              height: 1.8
+          ) ,
+          headlineSmall:GoogleFonts.lora(
+              fontSize: 18,
+              color: AppColor.primary,
+              fontWeight: FontWeight.bold
+          ) ,
+          bodyMedium:GoogleFonts.lora(
+              fontSize: 25,
+              color: AppColor.primary,
+              fontWeight: FontWeight.bold
+          ) ,
+          labelLarge:GoogleFonts.lora(
+              color: Colors.white,
+              fontSize: 20
+          )
+      )
+  ),
+  AppTheme.darkMode: ThemeData(
+
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: AppColor.darkMode,
+      ),
+      primaryColor: AppColor.primary,
+      iconTheme: IconThemeData(
+          color: AppColor.iconColor,
+          size: 32
+      ),
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: AppColor.darkMode,
+      appBarTheme: AppBarTheme(
+          color: AppColor.darkMode ,
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+              color: AppColor.primary,
+              fontSize: 22,
+              fontWeight: FontWeight.bold
+          )
+      ),
+      textTheme: TextTheme(
+          displaySmall:GoogleFonts.lora(
+            fontSize: 13,
+            color: AppColor.lightMode,
+            fontWeight: FontWeight.bold,
+          ) ,
+          bodySmall:GoogleFonts.lora(
+              fontSize: 13,
+              color: AppColor.lightMode,
+              fontWeight: FontWeight.bold,
+              height: 1.8
+          ) ,
+          headlineSmall:GoogleFonts.lora(
+              fontSize: 18,
+              color: AppColor.primary,
+              fontWeight: FontWeight.bold
+          ) ,
+          bodyMedium:GoogleFonts.lora(
+              fontSize: 25,
+              color: AppColor.primary,
+              fontWeight: FontWeight.bold
+          ) ,
+          labelLarge:GoogleFonts.lora(
+              color: AppColor.darkMode,
+              fontSize: 20
+          )
+      )
+  ),
+
+};

@@ -1,7 +1,6 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:design_pattern/Admin.dart';
 import 'package:design_pattern/core/utils/app_colors.dart';
-import 'package:design_pattern/navigaion.dart';
+import 'package:design_pattern/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:design_pattern/Models/UserModel.dart';
 
@@ -161,7 +160,7 @@ class _SignUpState extends State<SignUp> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Navigation( isAdmin: false,)));
+                                builder: (context) => const Navigation()));
                         },
                       child: const Text("SIGN UP", style: TextStyle(color: Colors.white, fontSize: 20),)),
                   ),
@@ -271,12 +270,12 @@ class _SignUpState extends State<SignUp> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Navigation(isAdmin: true,)));
+                                  builder: (context) => const Navigation()));
                         }else{
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Navigation(isAdmin: false,)));
+                                  builder: (context) => const Navigation()));
                         }
                       },
                       child: const Text("LOG IN", style: TextStyle(color: Colors.white, fontSize: 20),)),

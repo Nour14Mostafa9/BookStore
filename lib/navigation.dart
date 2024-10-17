@@ -1,15 +1,15 @@
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:design_pattern/core/utils/app_colors.dart';
 import 'package:design_pattern/features/books/presentation/pages/home.dart';
-import 'package:design_pattern/Order.dart';
-import 'package:design_pattern/Profile.dart';
+import 'package:design_pattern/order.dart';
+import 'package:design_pattern/profile.dart';
 import 'package:design_pattern/features/books/presentation/pages/wishlist.dart';
 import 'package:flutter/material.dart';
 
 
 class Navigation extends StatefulWidget {
-  final bool isAdmin;
-  const Navigation({super.key, required this.isAdmin});
+  const Navigation({super.key});
 
   @override
   State<Navigation> createState() => _NavigationState();
@@ -18,7 +18,6 @@ class Navigation extends StatefulWidget {
 class _NavigationState extends State<Navigation> {
 
 
-   var isAdmin = false;
   int selectedPage=0;
   List <Widget> pages = const[
     Home(),
@@ -29,13 +28,25 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
+
+    Color backgroundColor =AppColor.lightMode;
+    Color navBarColor =AppColor.lightMode;
+    Color buttonBackgroundColor =AppColor.lightMode;
+
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
+    backgroundColor = isDarkMode ? AppColor.darkMode : AppColor.lightMode;
+    navBarColor = isDarkMode ? AppColor.darkMode : AppColor.lightMode;
+    buttonBackgroundColor = isDarkMode ? AppColor.darkMode : AppColor.lightMode;
+
+
     return Scaffold(
-      backgroundColor: Colors.white,
       bottomNavigationBar: CurvedNavigationBar(
         index:selectedPage ,
-        backgroundColor:Colors.white,
-        color:Colors.white,
-        buttonBackgroundColor: Colors.white10,
+        backgroundColor:backgroundColor,
+        color:navBarColor,
+        buttonBackgroundColor: buttonBackgroundColor,
         height: 60,
         animationDuration:const Duration(milliseconds: 300),
         onTap: (index){

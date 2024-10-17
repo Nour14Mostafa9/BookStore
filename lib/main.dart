@@ -1,4 +1,5 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:design_pattern/config/theme/theme_bloc.dart';
 import 'package:design_pattern/core/utils/app_colors.dart';
 import 'package:design_pattern/core/utils/app_strings.dart';
 import 'package:design_pattern/features/books/presentation/manager/add_fav_bloc/add_bloc.dart';
@@ -6,8 +7,8 @@ import 'package:design_pattern/features/books/presentation/manager/get_books_blo
 import 'package:design_pattern/features/books/presentation/manager/get_fav_books/favourite_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:design_pattern/features/books/presentation/pages/home.dart';
-import 'package:design_pattern/navigaion.dart';
-import 'package:design_pattern/Welcome.dart';
+import 'package:design_pattern/navigation.dart';
+import 'package:design_pattern/welcome.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -37,12 +38,28 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_)=>di.sl<BooksBloc>()..add(GetAllBooksEvent())),
         BlocProvider(create: (_)=>di.sl<FavouriteBloc>()..add(GetAllFavBooksEvent())),
         BlocProvider(create: (_)=>di.sl<AddBloc>()),
+        BlocProvider(create: (_)=>di.sl<ThemeBloc>()..add(GetCurrentThemeEvent()))
+
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title:AppStrings.appName,
-        theme: appTheme(),
-        routes: routes,
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          if(state is LoadedThemeState){
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: state.theme,
+              title:AppStrings.appName,
+              routes: routes,
+
+            );
+          }
+          return  MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title:AppStrings.appName,
+            theme: appTheme() ,
+            routes: routes,
+          );
+
+        },
       ),
     );
   }

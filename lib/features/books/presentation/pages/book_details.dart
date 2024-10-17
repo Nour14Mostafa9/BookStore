@@ -1,12 +1,11 @@
 import 'package:design_pattern/core/utils/snackbar_msg.dart';
 import 'package:design_pattern/core/widgets/loading_widget.dart';
 import 'package:design_pattern/features/books/presentation/manager/add_fav_bloc/add_bloc.dart';
-import 'package:design_pattern/features/books/presentation/manager/get_fav_books/favourite_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../../../../navigaion.dart';
+import '../../../../navigation.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../domain/entities/book.dart';
 
@@ -21,8 +20,15 @@ class BookDetails extends StatefulWidget {
 class _BookDetailsState extends State<BookDetails> {
   bool isMarked = false;
 
+
   @override
   Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+    bool isDarkMode= theme.brightness == Brightness.light;
+    Color btnColor= isDarkMode?AppColor.lightMode:AppColor.darkMode;
+
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 13,vertical: 20),
@@ -116,30 +122,29 @@ class _BookDetailsState extends State<BookDetails> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => const Navigation( isAdmin: false,)));
+                                            builder: (context) => const Navigation()));
                                   },
                                   child: const Text("READ", style: TextStyle(color: Colors.white, fontSize: 20),)),
                             ),
                           ),
                           const SizedBox(width: 30,),
                           Center(
-                            child: Container(
+                            child: SizedBox(
                               width: 150,
                               height: 40,
                               child: ElevatedButton(
                                   style:ElevatedButton.styleFrom(
-                                    elevation: 10,
-                                    backgroundColor: AppColor.btn2Color ,
+                                    elevation: 50,
+                                    backgroundColor: btnColor ,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30.0),
-
                                     ),
                                   ),
                                   onPressed: ()async {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => const Navigation( isAdmin: false,)));
+                                            builder: (context) => const Navigation()));
                                   },
                                   child: Text("BUY", style: TextStyle(color: AppColor.primary, fontSize: 20),)),
                             ),

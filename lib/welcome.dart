@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:design_pattern/Login.dart';
 import 'package:design_pattern/features/registration/presentation/pages/SignUp.dart';
-
 import 'core/utils/app_colors.dart';
 
 

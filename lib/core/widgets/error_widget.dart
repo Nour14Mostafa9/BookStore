@@ -1,7 +1,8 @@
+import 'package:design_pattern/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../navigaion.dart';
+import '../../navigation.dart';
 
 class ErrorWidgett extends StatelessWidget {
   const ErrorWidgett({super.key});
@@ -24,18 +25,17 @@ class ErrorWidgett extends StatelessWidget {
                     child: ElevatedButton(
                         style:ElevatedButton.styleFrom(
                           elevation: 10,
-                          backgroundColor:  Colors.green.shade200 ,
+                          backgroundColor:  AppColor.darkMode,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
 
                           ),
                         ),
-                        onPressed: ()async {
-
+                        onPressed: (){
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Navigation( isAdmin: false,)));
+                                  builder: (context) => const Navigation()));
                         },
                         child: const Text("Reload", style: TextStyle(color: Colors.white, fontSize: 18),))))
 

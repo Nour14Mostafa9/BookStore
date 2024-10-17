@@ -44,6 +44,7 @@ dependencies:
   shared_preferences:
   flutter_rating_bar:
   animated_search_bar:
+  day_night_switcher:
   http:
   flutter_bloc:
   get_it:

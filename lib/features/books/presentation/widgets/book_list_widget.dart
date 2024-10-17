@@ -16,10 +16,12 @@ class BookListWidget extends StatefulWidget {
 }
 
 class _BookListWidgetState extends State<BookListWidget> {
+  bool isChosen = false;
+  bool isMarked = false;
   @override
   Widget build(BuildContext context) {
 
-    return widget.isHome ?_body():Padding(
+    return widget.isHome ?_homeBody():Padding(
       padding: const EdgeInsets.all(20.0),
       child: ListView.separated(
           separatorBuilder: (context,index){
@@ -82,19 +84,21 @@ class _BookListWidgetState extends State<BookListWidget> {
     );
   }
 
-  Widget _body(){
+  Widget _homeBody(){
     String searchText="";
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 50,horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 50),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Hi,",style: TextStyle(color: AppColor.primary),),
-          const SizedBox(height: 50,),
+          const SizedBox(height: 30,),
           AnimatedSearchBar(
             label: "Search",
             height: 45,
             closeIcon: const Icon(Icons.close_rounded),
+
             labelStyle: TextStyle(color: AppColor.primary,fontSize: 20 ),
             onChanged: (value) {
               debugPrint("value on Change");
@@ -106,6 +110,40 @@ class _BookListWidgetState extends State<BookListWidget> {
 
           const SizedBox(height: 50,),
           Expanded(
+            flex: 1,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+                itemBuilder: (context,index){
+                  return SizedBox(
+                    height: 10,
+                    width: 100,
+                    child: ElevatedButton(
+                        style:ElevatedButton.styleFrom(
+                          elevation: 10,
+                          shadowColor: AppColor.btnColor ,
+                          foregroundColor:AppColor.btnColor ,
+                          backgroundColor: isChosen?AppColor.lightMode:AppColor.btnColor,
+                          overlayColor:AppColor.btnColor  ,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isChosen = !isChosen;
+                          });
+                        },
+                        child: Text("filter", style: TextStyle(color: isChosen?AppColor.btnColor:AppColor.lightMode , fontSize: 20),)),
+                  );
+                },
+                separatorBuilder:  (context,index){
+                  return const SizedBox(width: 20,);
+                },
+                itemCount: 3),
+          ),
+          const SizedBox(height: 30,),
+          Expanded(
+            flex: 5,
             child: ListView.separated(
                 separatorBuilder: (context,index){
                   return const SizedBox(height: 60,);},
@@ -136,25 +174,39 @@ class _BookListWidgetState extends State<BookListWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("${widget.bookList[index].title}" ,style: Theme.of(context).textTheme.headlineSmall),
-                                  const SizedBox(height: 10,),
-                                  SizedBox(
-                                    height: 2,
-                                    child: RatingBar.builder(
-                                      initialRating:widget.bookList[index].averageRating ,
-                                      minRating: 1,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      itemSize: 18,
-                                      itemBuilder: (context, _) => const Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                      ),
-                                      onRatingUpdate: (rating) {
-                                        print(rating);
-                                      },
+                                  const SizedBox(height: 30,),
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        height: 2,
+                                        child: RatingBar.builder(
+                                          initialRating:widget.bookList[index].averageRating ,
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemSize: 18,
+                                          itemBuilder: (context, _) => const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {
+                                            print(rating);
+                                          },
 
-                                    ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 60,),
+                                      InkWell(
+                                        onTap: (){
+                                          setState(() {
+                                          });
+                                        },
+                                        child: isMarked ? Icon(Icons.bookmark_rounded,color: AppColor.iconColor,size: 40,):
+                                        Icon(Icons.bookmark_outline,color:AppColor.iconColor,size: 30,),
+                                      ),
+
+                                    ],
                                   )],),
                             ),
                           ]

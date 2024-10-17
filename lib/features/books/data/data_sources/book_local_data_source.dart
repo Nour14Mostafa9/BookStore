@@ -23,7 +23,7 @@ class BookLocalImp implements BookLocalDataSource{
     final existingBooksString = preferences.getString("CachedBooks") ?? '[]';
     final existingBooks = List<Map<String, dynamic>>.from(json.decode(existingBooksString));
 
-    bool bookExists = existingBooks.any((b) => b['id'] == book.title);
+    bool bookExists = existingBooks.any((b) => b['title'] == book.title);
 
     if (!bookExists) {
       existingBooks.add(bookJson);

@@ -1,3 +1,4 @@
+import 'package:design_pattern/config/theme/theme_bloc.dart';
 import 'package:design_pattern/core/network/network_info.dart';
 import 'package:design_pattern/features/books/data/data_sources/book_local_data_source.dart';
 import 'package:design_pattern/features/books/data/data_sources/book_remote_data_source.dart';
@@ -45,6 +46,9 @@ Future<void> init() async {
     sl.registerLazySingleton(()=>sharedPreferences);
     
     sl.registerLazySingleton(()=> http.Client());
+
+    //Theme
+    sl.registerLazySingleton<ThemeBloc>(()=>ThemeBloc());
     
     
 
