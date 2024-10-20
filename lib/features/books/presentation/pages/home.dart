@@ -29,13 +29,13 @@ class _HomeState extends State<Home> {
       child: BlocBuilder<BooksBloc,BooksState>(
        builder: (context,state){
          if(state is LoadingBooksState){
-           return  const LaodingWidget();
+           return  const LoadingWidget();
          }else if(state is ErrorBooksState){
            return  const ErrorWidgett();
          }else if(state is LoadedBooksState){
            return BookListWidget(bookList: state.books,isHome: true,);
          }else{
-           return const LaodingWidget();
+           return const LoadingWidget();
          }
        },
 

@@ -14,6 +14,6 @@ class Routes{
 final routes ={
   Routes.welcome : (context)=> const Welcome(),
   Routes.home :(context)=> const Home(),
-  Routes.favourites :(context)=> const Wishlist(),
+  Routes.favourites :(context)=> const FavouriteBooks(),
   Routes.profile :(context)=> const Profile(),
 };

@@ -52,7 +52,7 @@ class _BookDetailsState extends State<BookDetails> {
                       },
                       builder: (context,state){
                         if(state is LoadingAddFavBook) {
-                          return const LaodingWidget();
+                          return const LoadingWidget();
                         }else {
                           return _body();
                         }
@@ -169,7 +169,7 @@ class _BookDetailsState extends State<BookDetails> {
           addToFavourites();
         }
       },
-      child: isMarked ? Icon(Icons.bookmark_rounded,color: AppColor.iconColor,size: 40,):
+      child:isMarked ? Icon(Icons.bookmark_rounded,color: AppColor.iconColor,size: 40,):
       Icon(Icons.bookmark_outline,color:AppColor.iconColor,size: 40,),
     );
   }

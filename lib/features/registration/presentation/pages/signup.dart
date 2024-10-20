@@ -2,7 +2,7 @@
 import 'package:design_pattern/core/utils/app_colors.dart';
 import 'package:design_pattern/navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:design_pattern/Models/UserModel.dart';
+
 
 
 class SignUp extends StatefulWidget {
@@ -154,9 +154,6 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                         onPressed: ()async {
-                        final user = User(userName: name.text, password: password.text ,creditCardno:int.parse(credit.text), phone:int.parse(email.text) );
-                        //Admin admin = Admin.getInstance();
-                       // admin.addUser(user);
                         Navigator.push(
                             context,
                             MaterialPageRoute(

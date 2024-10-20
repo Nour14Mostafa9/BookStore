@@ -10,8 +10,8 @@ class GetAllBooks {
   GetAllBooks(this.repository);
 
 
-  Future<Either<Failure,List<Book>>> call()async{
-     return await repository.getBooks();
+  Future<Either<Failure,List<Book>>> call(String subject)async{
+     return await repository.getBooks(subject);
   }
 
 }

@@ -18,13 +18,13 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
         emit(LoadingFavBooksState());
 
         final favBooks = await favouriteBooks();
-        print(favBooks);
+        //print(favBooks);
         favBooks.fold(
          (failure){
            emit(ErrorRetrievingFavBooksState(msg: mappingFailureToMsg(failure)));
            },
          (favouriteBooks){
-           print("tmam");
+          // print("tmam");
            emit(LoadedFavBooksState(books: favouriteBooks));
          }
         );

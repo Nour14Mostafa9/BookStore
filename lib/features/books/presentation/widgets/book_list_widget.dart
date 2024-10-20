@@ -1,9 +1,13 @@
 import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:design_pattern/core/utils/app_colors.dart';
+import 'package:design_pattern/features/books/domain/use_cases/get_all_books.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../domain/entities/book.dart';
+import '../manager/get_books_bloc/books_bloc.dart';
+import '../manager/get_fav_books/favourite_bloc.dart';
 import '../pages/book_details.dart';
 
 class BookListWidget extends StatefulWidget {
@@ -16,6 +20,8 @@ class BookListWidget extends StatefulWidget {
 }
 
 class _BookListWidgetState extends State<BookListWidget> {
+
+  List<String> sub= ['Fiction', 'History', 'Science', 'Technology', 'Art'];
   bool isChosen = false;
   bool isMarked = false;
   @override
@@ -68,7 +74,7 @@ class _BookListWidgetState extends State<BookListWidget> {
                                   color: Colors.amber,
                                 ),
                                 onRatingUpdate: (rating) {
-                                  print(rating);
+                                  //print(rating);
                                 },
 
                               ),
@@ -85,8 +91,6 @@ class _BookListWidgetState extends State<BookListWidget> {
   }
 
   Widget _homeBody(){
-    String searchText="";
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 50),
       child: Column(
@@ -98,14 +102,13 @@ class _BookListWidgetState extends State<BookListWidget> {
             label: "Search",
             height: 45,
             closeIcon: const Icon(Icons.close_rounded),
-
             labelStyle: TextStyle(color: AppColor.primary,fontSize: 20 ),
-            onChanged: (value) {
-              debugPrint("value on Change");
-              setState(() {
-                searchText = value;
-              });
-            },
+            searchIcon: IconButton(
+                onPressed: (){
+                   showSearch(context: context , delegate: SearchClass(bookList: widget.bookList));
+                },
+                icon: const Icon(Icons.search_outlined)),
+            onChanged: (value) {},
           ),
 
           const SizedBox(height: 50,),
@@ -131,15 +134,16 @@ class _BookListWidgetState extends State<BookListWidget> {
                         onPressed: () {
                           setState(() {
                             isChosen = !isChosen;
+                            BlocProvider.of<BooksBloc>(context).add(GetAllBooksEvent(subject: sub[index].toLowerCase()));
                           });
                         },
-                        child: Text("filter", style: TextStyle(color: isChosen?AppColor.btnColor:AppColor.lightMode , fontSize: 20),)),
+                        child: Text(sub[index], style: TextStyle(color: isChosen?AppColor.btnColor:AppColor.lightMode , fontSize: 15),)),
                   );
                 },
                 separatorBuilder:  (context,index){
                   return const SizedBox(width: 20,);
                 },
-                itemCount: 3),
+                itemCount: sub.length),
           ),
           const SizedBox(height: 30,),
           Expanded(
@@ -191,7 +195,7 @@ class _BookListWidgetState extends State<BookListWidget> {
                                             color: Colors.amber,
                                           ),
                                           onRatingUpdate: (rating) {
-                                            print(rating);
+                                            //print(rating);
                                           },
 
                                         ),
@@ -200,9 +204,10 @@ class _BookListWidgetState extends State<BookListWidget> {
                                       InkWell(
                                         onTap: (){
                                           setState(() {
+                                            isMarked = !isMarked;
                                           });
                                         },
-                                        child: isMarked ? Icon(Icons.bookmark_rounded,color: AppColor.iconColor,size: 40,):
+                                        child: isMarked ? Icon(Icons.bookmark_rounded,color: AppColor.iconColor,size: 30,):
                                         Icon(Icons.bookmark_outline,color:AppColor.iconColor,size: 30,),
                                       ),
 
@@ -222,4 +227,132 @@ class _BookListWidgetState extends State<BookListWidget> {
       ),
     );
   }
+
 }
+
+class SearchClass extends SearchDelegate {
+  final List<Book> bookList;
+
+  SearchClass({required this.bookList});
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: IconButton(
+          onPressed: () {
+            query = "";
+          },
+          icon: const Icon(Icons.close,),
+        ),
+      )
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    // TODO: implement buildLeading
+    return IconButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      icon: const Icon(Icons.arrow_back_outlined, size: 30,),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    final result = findBookName(bookList, query);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 50.0,horizontal: 30),
+      child: ListView.separated(
+          separatorBuilder: (context, index) {
+            return const SizedBox(height: 60,);
+          },
+          itemCount: result.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            BookDetails(book: result[index],)));
+              },
+              child: SizedBox(
+                width: 250,
+                child: Row(
+                    children: [
+                      Container(
+                        height: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          //   image: DecorationImage(image: NetworkImage(bookList[index].smallThumbnail) )
+                        ),
+                        child: Image.network("${result[index].smallThumbnail}",
+                          fit: BoxFit.cover,),),
+                      const SizedBox(width: 30,),
+                      SizedBox(
+                        width: 180,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("${result[index].title}", style: Theme
+                                .of(context)
+                                .textTheme
+                                .headlineSmall),
+                            const SizedBox(height: 10,),
+                            SizedBox(
+                              height: 2,
+                              child: RatingBar.builder(
+                                initialRating: result[index].averageRating,
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemSize: 18,
+                                itemBuilder: (context, _) =>
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  //print(rating);
+                                },
+
+                              ),
+                            )
+                          ],),
+                      ),
+                    ]
+
+                ),
+
+              ),
+            );
+          }),
+    );
+  }
+
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    return const Center(
+      child: Text("Search Book Name"),
+    );
+  }
+}
+
+  List<Book> findBookName(List<Book> allBooks , String query) {
+    List<Book> results=[];
+    for(Book searchBook in allBooks){
+      if(searchBook.title!.toLowerCase().contains(query.toLowerCase())){
+         results.add(searchBook);
+      }
+    }
+    return results;
+  }
+
+

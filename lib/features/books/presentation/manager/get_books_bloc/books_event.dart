@@ -9,7 +9,20 @@ abstract class BooksEvent extends Equatable {
 }
 
 class GetAllBooksEvent extends BooksEvent{
+  final String subject;
+
+  const GetAllBooksEvent({required this.subject});
+  @override
+  // TODO: implement props
+  List<Object> get props => [subject];
 
 }
 
-class RefreshBooksEvent extends BooksEvent{}
+class RefreshBooksEvent extends BooksEvent{
+  final String subject;
+
+  const RefreshBooksEvent({required this.subject});
+  @override
+  // TODO: implement props
+  List<Object> get props => [subject];
+}

@@ -1,4 +1,4 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:design_pattern/config/theme/theme_bloc.dart';
 import 'package:design_pattern/core/utils/app_colors.dart';
 import 'package:design_pattern/core/utils/app_strings.dart';
@@ -21,10 +21,9 @@ import 'config/theme/app_theme.dart';
 
  Future  main() async {
    WidgetsFlutterBinding.ensureInitialized();
-   //await Firebase.initializeApp();
    await di.init();
 
-  runApp( MyApp());
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_)=>di.sl<BooksBloc>()..add(GetAllBooksEvent())),
+        BlocProvider(create: (_)=>di.sl<BooksBloc>()..add(const GetAllBooksEvent(subject: "fiction"))),
         BlocProvider(create: (_)=>di.sl<FavouriteBloc>()..add(GetAllFavBooksEvent())),
         BlocProvider(create: (_)=>di.sl<AddBloc>()),
         BlocProvider(create: (_)=>di.sl<ThemeBloc>()..add(GetCurrentThemeEvent()))

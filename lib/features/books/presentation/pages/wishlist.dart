@@ -42,7 +42,7 @@ class _WishlistState extends State<Wishlist> {
       child: BlocBuilder<FavouriteBloc, FavouriteState>(
         builder: (context, state) {
           if (state is LoadingFavBooksState) {
-            return const LaodingWidget();
+            return const LoadingWidget();
           } else if (state is ErrorRetrievingFavBooksState) {
             return const ErrorWidgett();
           } else if (state is LoadedFavBooksState) {

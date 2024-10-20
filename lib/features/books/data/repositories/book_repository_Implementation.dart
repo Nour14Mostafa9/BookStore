@@ -18,10 +18,10 @@ class BookRepositoryImplementation extends BookRepository {
 
 
   @override
-  Future<Either<Failure, List<Book>>> getBooks() async {
+  Future<Either<Failure, List<Book>>> getBooks(String subject) async {
     if(await info.isConnected){
       try{
-       final remoteData= await remoteDataSource.getBooks();
+       final remoteData= await remoteDataSource.getBooks(subject);
        return Right(remoteData as List<Book>);
 
       } on ServerException{

@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:design_pattern/features/registration/presentation/pages/SignUp.dart';
+import 'package:design_pattern/features/registration/presentation/pages/signup.dart';
 import 'core/utils/app_colors.dart';
+import 'core/utils/app_strings.dart';
 
 
 
@@ -28,7 +29,7 @@ class _WelcomeState extends State<Welcome> {
               child: Column(
                 children: [
                   Text(
-                      "Shopify", style: TextStyle(fontSize: 28, color: AppColor.primary , fontWeight: FontWeight.bold)),
+                      AppStrings.appName, style: TextStyle(fontSize: 28, color: AppColor.primary , fontWeight: FontWeight.bold)),
                   const SizedBox(height: 100,),
                   TabBar(
                     indicatorColor: Colors.blue[700]!,

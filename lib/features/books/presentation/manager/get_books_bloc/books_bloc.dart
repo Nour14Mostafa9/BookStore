@@ -13,10 +13,10 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   final GetAllBooks getAllBooks;
   BooksBloc({required this.getAllBooks}) : super(BooksInitial()) {
     on<BooksEvent>((event, emit) async {
-      if(event is GetAllBooksEvent || event is RefreshBooksEvent){
+      if(event is GetAllBooksEvent ){
         emit(LoadingBooksState());
 
-        final books = await getAllBooks();
+        final books = await getAllBooks(event.subject);
         books.fold(
              (failure){
                emit(ErrorBooksState(msg: MappingFailureToMsg(failure)));
