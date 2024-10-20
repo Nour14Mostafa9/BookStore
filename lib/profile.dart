@@ -1,12 +1,18 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:day_night_switcher/day_night_switcher.dart';
+
 import 'package:design_pattern/config/theme/app_theme.dart';
 import 'package:design_pattern/config/theme/theme_bloc.dart';
-import 'package:design_pattern/main.dart';
+import 'package:design_pattern/core/utils/app_colors.dart';
+import 'package:design_pattern/welcome.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  final String name ;
+   const Profile({super.key, required this.name});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -15,6 +21,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   bool isDarkModeEnabled = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +34,24 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: MediaQuery.of(context).size.height*.1,),
             Row(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 40,
                   child: Icon(Icons.person,size: 30 ,),
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width*.05,),
                 Column(
                   children: [
-                    Text("User Name"),
+                    Text(widget.name,style: TextStyle(color: AppColor.btnColor),),
                     TextButton(
                       onPressed: (){},
-                      child: Text("Edit",),
+                      child: const Text("Edit",),
                     ),
                   ],
                 )
               ],
             ),
             SizedBox(height: MediaQuery.of(context).size.height*.05,),
-            Divider(height: 1,),
+            const Divider(height: 1,),
             SizedBox(height: MediaQuery.of(context).size.height*.05,),
             Row(
               children: [
@@ -56,7 +63,6 @@ class _ProfileState extends State<Profile> {
                     isDarkModeEnabled: isDarkModeEnabled,
                     onStateChanged: (isDarkMode) {
                       setState(() {
-                       isDarkMode = isDarkModeEnabled;
                        isDarkModeEnabled = !isDarkModeEnabled;
                        context.read<ThemeBloc>().add(ChangeThemeEvent(theme: !isDarkModeEnabled?AppTheme.values[0]:AppTheme.values[1]));
                       });
@@ -68,9 +74,9 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: MediaQuery.of(context).size.height*.03,),
             InkWell(
               onTap: (){},
-                child: Container(
+                child: const SizedBox(
                    width: double.infinity,
-                    child: const Text("Notifications",style: TextStyle(fontSize: 20),))),
+                    child: Text("Notifications",style: TextStyle(fontSize: 20),))),
             SizedBox(height: MediaQuery.of(context).size.height*.03,),
             InkWell(
               onTap: (){},
@@ -84,14 +90,60 @@ class _ProfileState extends State<Profile> {
             ),
             SizedBox(height: MediaQuery.of(context).size.height*.03,),
             InkWell(
-              onTap: (){},
-                child: Container(
+              onTap: (){
+                AwesomeDialog(
+                  context: context,
+                  animType: AnimType.scale,
+                  dialogType: DialogType.warning,
+                  body:  Center(child: Text("Do You Want To Exit?", style:Theme.of(context).textTheme.bodyMedium,
+                  ),),
+                  title: 'Exit',
+                  desc:   'Do you want to clear your cache',
+                  btnOkText: "Clear",
+                  btnOkColor: AppColor.btnColor,
+                  btnCancelColor: Theme.of(context).brightness==Brightness.dark?AppColor.darkMode:AppColor.lightMode ,
+                  btnCancelText:"Cancel",
+                  buttonsTextStyle: TextStyle(color: Theme.of(context).brightness!=Brightness.dark?AppColor.darkMode:AppColor.lightMode ),
+                  btnCancelOnPress: (){},
+                  btnOkOnPress: () async{
+                   SharedPreferences preference = await SharedPreferences.getInstance();
+                   await preference.setStringList("CachedBooks",[""]);
+                  },
+                ).show();
+              },
+                child: const SizedBox(
                   width: double.infinity,
-                    child: const Text("Clear Cache ",style: TextStyle(fontSize: 20),))),
+                    child: Text("Clear Cache ",style: TextStyle(fontSize: 20),))),
             SizedBox(height: MediaQuery.of(context).size.height*.03,),
             InkWell(
                 onTap: (){},
                 child: const Text("Contact ",style: TextStyle(fontSize: 20),)),
+            SizedBox(height: MediaQuery.of(context).size.height*.03,),
+            InkWell(
+                onTap: (){
+                  AwesomeDialog(
+                    context: context,
+                    animType: AnimType.scale,
+                    dialogType: DialogType.warning,
+                    body:  Center(child: Text("Do You Want To Exit?", style:Theme.of(context).textTheme.bodyMedium,
+                    ),),
+                    title: 'Exit',
+                    desc:   'Do you want to exit',
+                    btnOkText: "Exit",
+                    btnOkColor: AppColor.btnColor,
+                    btnCancelColor: Theme.of(context).brightness==Brightness.dark?AppColor.darkMode:AppColor.lightMode ,
+                    btnCancelText:"Cancel",
+                    buttonsTextStyle: TextStyle(color: Theme.of(context).brightness!=Brightness.dark?AppColor.darkMode:AppColor.lightMode ),
+                    btnCancelOnPress: (){},
+                    btnOkOnPress: () async{
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_,)=> const Welcome()));
+                    },
+                  ).show();
+                },
+                child: const SizedBox(
+                    width: double.infinity,
+                    child: Text("Sign Out ",style: TextStyle(fontSize: 20),))),
 
 
 

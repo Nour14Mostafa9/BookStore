@@ -1,8 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:design_pattern/features/registration/presentation/pages/SignUp.dart';
+import 'package:design_pattern/features/books/presentation/pages/signup.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'core/utils/app_colors.dart';
-
+import 'core/utils/app_strings.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 
 class Welcome extends StatefulWidget {
@@ -27,8 +29,11 @@ class _WelcomeState extends State<Welcome> {
               preferredSize:const Size.fromHeight(180.0),
               child: Column(
                 children: [
-                  Text(
-                      "Shopify", style: TextStyle(fontSize: 28, color: AppColor.primary , fontWeight: FontWeight.bold)),
+                  Animate(
+                  child: GradientText(
+                      AppStrings.appName, style:const TextStyle(fontSize: 30,  fontWeight: FontWeight.bold),colors: [AppColor.primary,AppColor.shadesColor],).animate().fadeIn(duration: 3000.ms)
+                      .then(delay: 500.ms) // baseline=800ms
+                      .slide() ),
                   const SizedBox(height: 100,),
                   TabBar(
                     indicatorColor: Colors.blue[700]!,
@@ -44,11 +49,11 @@ class _WelcomeState extends State<Welcome> {
             ),
           ),
           // backgroundColor: Colors.brown.shade200,
-          body:  TabBarView(
-            children: [
+          body: const TabBarView(
+            children:  [
               SignUp(registration: true),
               SignUp(registration: false,),
-            //  Login(),
+
             ],
           )
 

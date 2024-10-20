@@ -2,10 +2,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:design_pattern/core/utils/app_colors.dart';
 import 'package:design_pattern/features/books/presentation/pages/home.dart';
-import 'package:design_pattern/order.dart';
 import 'package:design_pattern/profile.dart';
 import 'package:design_pattern/features/books/presentation/pages/wishlist.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Navigation extends StatefulWidget {
@@ -16,15 +16,34 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
+  late String name;
 
 
   int selectedPage=0;
-  List <Widget> pages = const[
-    Home(),
-    Wishlist(),
-    Order(),
-    Profile(),
+  List <Widget> pages=[
+    Home(name: ""),
+    const Wishlist(),
+    const Profile(name: ""),
   ];
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserName();
+
+  }
+
+  Future <void> getUserName()async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    name = preferences.getString("UserName")??"User";
+    pages = [
+      Home(name: name),
+      const Wishlist(),
+      Profile(name: name),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +76,7 @@ class _NavigationState extends State<Navigation> {
         items:const [
           Icon(Icons.home),
           Icon(Icons.bookmark_outline),
-          Icon(Icons.wallet_rounded),
+       //   Icon(Icons.wallet_rounded),
           Icon(Icons.person),
         ],
       ),

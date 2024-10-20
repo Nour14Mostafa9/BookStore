@@ -10,7 +10,6 @@ import 'package:design_pattern/features/books/presentation/manager/get_fav_books
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'features/books/domain/use_cases/fav_books.dart';
 import 'features/books/domain/use_cases/get_all_books.dart';
 import 'features/books/domain/use_cases/get_fav_books.dart';

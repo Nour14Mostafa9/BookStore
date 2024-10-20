@@ -52,7 +52,7 @@ class _BookDetailsState extends State<BookDetails> {
                       },
                       builder: (context,state){
                         if(state is LoadingAddFavBook) {
-                          return const LaodingWidget();
+                          return const LoadingWidget();
                         }else {
                           return _body();
                         }
@@ -96,7 +96,7 @@ class _BookDetailsState extends State<BookDetails> {
                             color: Colors.amber,
                           ),
                           onRatingUpdate: (rating) {
-                            print(rating);
+                           // print(rating);
                           },
 
                         ),
@@ -105,7 +105,7 @@ class _BookDetailsState extends State<BookDetails> {
                       Row(
                         children: [
                           Center(
-                            child: Container(
+                            child: SizedBox(
                               width: 150,
                               height: 40,
                               child: ElevatedButton(
@@ -117,13 +117,7 @@ class _BookDetailsState extends State<BookDetails> {
 
                                     ),
                                   ),
-                                  onPressed: ()async {
-
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => const Navigation()));
-                                  },
+                                  onPressed: ()async {},
                                   child: const Text("READ", style: TextStyle(color: Colors.white, fontSize: 20),)),
                             ),
                           ),
@@ -140,17 +134,13 @@ class _BookDetailsState extends State<BookDetails> {
                                       borderRadius: BorderRadius.circular(30.0),
                                     ),
                                   ),
-                                  onPressed: ()async {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => const Navigation()));
-                                  },
+                                  onPressed: ()async {},
                                   child: Text("BUY", style: TextStyle(color: AppColor.primary, fontSize: 20),)),
                             ),
                           )
                         ],
-                      )],),
+                      )
+                    ],),
                 ),
               ),
             ]
@@ -169,7 +159,7 @@ class _BookDetailsState extends State<BookDetails> {
           addToFavourites();
         }
       },
-      child: isMarked ? Icon(Icons.bookmark_rounded,color: AppColor.iconColor,size: 40,):
+      child:isMarked ? Icon(Icons.bookmark_rounded,color: AppColor.iconColor,size: 40,):
       Icon(Icons.bookmark_outline,color:AppColor.iconColor,size: 40,),
     );
   }

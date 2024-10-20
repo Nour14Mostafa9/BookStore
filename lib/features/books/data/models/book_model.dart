@@ -20,7 +20,9 @@ class BookModel extends Book{
     return BookModel(title: json['volumeInfo']['title'],
         description: json['volumeInfo']['description'],
         averageRating: json['volumeInfo']['averageRating']?.toDouble() ?? 0.0,
-        smallThumbnail: json['volumeInfo']['imageLinks']['thumbnail'],
+        smallThumbnail:  json['volumeInfo']['imageLinks'] != null
+            ? json['volumeInfo']['imageLinks']['thumbnail']
+            : null,
       previewLink: json['volumeInfo']['previewLink']
     );
   }

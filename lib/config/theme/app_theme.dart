@@ -23,12 +23,12 @@ ThemeData appTheme(){
       textTheme: TextTheme(
           displaySmall:GoogleFonts.lora(
               fontSize: 13,
-              color: AppColor.darkMode,
+              color: Colors.grey,
             fontWeight: FontWeight.bold,
           ) ,
           bodySmall:GoogleFonts.lora(
-            fontSize: 13,
-            color: AppColor.darkMode,
+            fontSize: 15,
+            color: Colors.grey,
             fontWeight: FontWeight.bold,
             height: 1.8
           ) ,
@@ -77,12 +77,13 @@ final appThemeData ={
       ),
       textTheme: TextTheme(
           displaySmall:GoogleFonts.lora(
-            fontSize: 13,
-            color: AppColor.darkMode,
+            fontSize: 14,
+            color: Colors.black26,
             fontWeight: FontWeight.bold,
+
           ) ,
           bodySmall:GoogleFonts.lora(
-              fontSize: 13,
+              fontSize: 15,
               color: AppColor.darkMode,
               fontWeight: FontWeight.bold,
               height: 1.8
@@ -127,11 +128,11 @@ final appThemeData ={
       textTheme: TextTheme(
           displaySmall:GoogleFonts.lora(
             fontSize: 13,
-            color: AppColor.lightMode,
+            color: Colors.grey,
             fontWeight: FontWeight.bold,
           ) ,
           bodySmall:GoogleFonts.lora(
-              fontSize: 13,
+              fontSize: 15,
               color: AppColor.lightMode,
               fontWeight: FontWeight.bold,
               height: 1.8

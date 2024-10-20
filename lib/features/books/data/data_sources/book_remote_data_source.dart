@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 
 abstract class BookRemoteDataSource {
-  Future<List<BookModel>> getBooks();
+  Future<List<BookModel>> getBooks(String subject);
 }
 
 class BookRemoteImpWithHttp implements BookRemoteDataSource{
@@ -18,18 +18,17 @@ class BookRemoteImpWithHttp implements BookRemoteDataSource{
   BookRemoteImpWithHttp({required this.client});
 
   @override
-  Future<List<BookModel>> getBooks() async {
-    print("0");
+  Future<List<BookModel>> getBooks(String subject) async {
     try {
       print(Uri.parse('${EndPoint.baseUrl}${EndPoint.endPoint}')
           .replace(queryParameters: {
-        'q': 'books',
+        'q': 'subject:adventure',
         'key': EndPoint.apiKey,
       }).toString());
       final response = await client.get(
         Uri.parse('${EndPoint.baseUrl}${EndPoint.endPoint}')
             .replace(queryParameters: {
-          'q': 'books',
+          'q': 'subject:${subject}',
           'key': EndPoint.apiKey,
         }),
 
